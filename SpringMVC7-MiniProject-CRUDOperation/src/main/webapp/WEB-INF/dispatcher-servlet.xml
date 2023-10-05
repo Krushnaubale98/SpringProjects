@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- DataSource cfgs -->
+	<bean id="hkDs" class="com.zaxxer.hikari.HikariDataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl"
+			value="jdbc:oracle:thin:@localhost:1521:orcl" />
+		<property name="username" value="batch11am" />
+		<property name="password" value="oracle" />
+		<property name="minimumIdle" value="10" />
+		<property name="maximumPoolSize" value="1000" />
+		<property name="idleTimeout" value="4000" />
+	</bean>
+
+	<!-- JdbcTemplate Configuration -->
+	<bean id="template"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="hkDs" />
+	</bean>
+
+
+	<!-- View resolver cfgs -->
+	<bean id="irvr"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- Component scanning cfg -->
+	<context:component-scan base-package="com.nt" />
+
+	<!-- static resources cfgs(images,js,css and etc... -->
+	<mvc:resources location="/resources/"
+		mapping="/resources/**" />
+	<mvc:annotation-driven />
+
+
+
+
+</beans>

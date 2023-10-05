@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.7.xsd">
+
+
+	<!-- Other security configuration -->
+	<security:http use-expressions="true">
+		<security:intercept-url pattern="/"
+			access="permitAll" />
+		<security:intercept-url pattern="/wish"
+			access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/contact"
+			access="hasRole('ROLE_AGENT')" />
+
+		<!-- enable basic mode of authentication -->
+		<security:http-basic />
+
+		<!-- enables the FORM mode authentication -->
+		<security:form-login />
+
+		<!-- cfg custom page as 403 error page -->
+		<security:access-denied-handler
+			error-page="/access_denied.jsp" />
+
+		<!-- enable logout -->
+		<security:logout />
+
+		<!-- to lock the user <security:user name="raja" password="{noop}rani" 
+			authorities="ROLE_ADMIN" locked="true" /> -->
+
+		<!-- enable remember me -->
+		<security:remember-me />
+
+		<!-- to control no.of logins -->
+		<security:session-management>
+			<security:concurrency-control
+				error-if-maximum-exceeded="true" max-sessions="2" />
+		</security:session-management>
+	</security:http>
+
+
+	<!-- security authentication configuration -->
+	<security:authentication-manager>
+		<!-- <security:authentication-provider> <security:user-service> <security:user 
+			name="raja" password="{noop}rani" authorities="ROLE_AGENT" /> <security:user 
+			name="ramesh" password="{noop}hyd" authorities="ROLE_ADMIN" /> <security:user 
+			name="suresh" password="{noop}delhi" authorities="ROLE_ADMIN,ROLE_AGENT" 
+			/> <security:user name="mahesh" password="{noop}hyd" authorities="ROLE_VISITOR" 
+			/> </security:user-service> </security:authentication-provider> -->
+
+		<!-- cfg properties file as authentication info provider ===OR======== -->
+		<!-- <security:authentication-provider>
+			<security:user-service
+				properties="classpath:com/nt/commons/security.properties" />
+		</security:authentication-provider> -->
+        
+        <!-- cnfg DB s/w as authentication info provider by specifying DataSource object,queries ======OR======== -->
+       <security:authentication-provider>
+          <security:jdbc-user-service data-source-ref="hkDs"
+             users-by-username-query="SELECT UNAME,PWD,STATUS FROM USERS WHERE UNAME=?"
+             authorities-by-username-query="SELECT UNAME,ROLE FROM USERS_ROLES WHERE UNAME=?"  />
+      </security:authentication-provider>
+   
+
+	</security:authentication-manager>
+
+</beans>

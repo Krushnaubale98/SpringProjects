@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- Spring 5.x version if not handler mapping is cfgs the RequestMappingHandlerMapping 
+		will be taken as the default -->
+
+	<!-- enable the component scanning -->
+	<context:component-scan base-package="com.nt" />
+
+	<!-- View Resolver cfgs -->
+	<bean id="irvr"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- import spring security configuration file -->
+	<import resource="security-beans.xml" />
+	<import resource="persistence-beans.xml" />
+</beans>

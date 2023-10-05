@@ -1,0 +1,34 @@
+package com.nt.model;
+
+public class Student {
+	private int sno;
+	private String sname;
+	private String saad;
+	private float avg;
+	public int getSno() {
+		return sno;
+	}
+	public void setSno(int sno) {
+		this.sno = sno;
+	}
+	public String getSname() {
+		return sname;
+	}
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+	public String getSaad() {
+		return saad;
+	}
+	public void setSaad(String saad) {
+		this.saad = saad;
+	}
+	public float getAvg() {
+		return avg;
+	}
+	public void setAvg(float avg) {
+		this.avg = avg;
+	};
+	
+
+}
